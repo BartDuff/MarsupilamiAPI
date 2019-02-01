@@ -1,5 +1,7 @@
 <strong># MarsupilamiAPI</strong>
-Api built with Node.js and MongoDB
+Api built with Node.js, Express.js and MongoDB
+
+run npm install to get all dependencies
 
 The API performs basic CRUD operations as well as adding new Friends to a Marsupilami's friend list
 
