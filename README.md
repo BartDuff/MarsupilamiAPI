@@ -14,29 +14,29 @@ You'll have to define a collection named "Marsupilami" or change the name in the
 db.collection("Marsupilami")
 
 <strong>Basic CRUD operations:</strong>
-(Marsupilamis should have these attibutes, changing them will alter the PUT request for modifications:
-"login" => login ,
-"mdp" => password ,
-"date_naissance" => birthday,
-"famille" => family ,
-"race" => breed ,
-"nourriture" => food,
-"friend_ids" => set to [] to have an empty list at registration
+(Marsupilamis should have these attibutes, changing them will alter the PUT request for modifications:<br>
+"login" => login , <br>
+"mdp" => password , <br>
+"date_naissance" => birthday, <br>
+"famille" => family , <br>
+"race" => breed , <br>
+"nourriture" => food, <br>
+"friend_ids" => set to [] to have an empty list at registration <br>
 
 
-get('/api/marsupilamis') => get all users
-get('/api/marsupilamis/:id') => get one user
-post('/api/marsupilamis') => add new user
-put('/api/marsupilamis/:id') => modifiy user's info
-delete('/api/marsupilamis/:id') => delete user
+get('/api/marsupilamis') => get all users <br>
+get('/api/marsupilamis/:id') => get one user <br>
+post('/api/marsupilamis') => add new user <br>
+put('/api/marsupilamis/:id') => modifiy user's info <br>
+delete('/api/marsupilamis/:id') => delete user <br>
 
 <strong>Managing friends:</strong>
 
-put('/api/amis/ajouter/:id') => add a friend
-put('/api/amis/supprimer/:id') => remove a friend
-get('/api/amis') => get friends' list
+put('/api/amis/ajouter/:id') => add a friend <br>
+put('/api/amis/supprimer/:id') => remove a friend <br>
+get('/api/amis') => get friends' list <br>
 
 <strong>Authentication:</strong>
 
-post('/api/login') => login
-get('/api/logout') => logout
+post('/api/login') => login <br>
+get('/api/logout') => logout <br>
