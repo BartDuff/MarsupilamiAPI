@@ -32,8 +32,8 @@ delete('/api/marsupilamis/:id') => delete user <br>
 
 <strong>Managing friends:</strong>
 
-put('/api/amis/ajouter/:id') => add a friend <br>
-put('/api/amis/supprimer/:id') => remove a friend <br>
+post('/api/amis/:id') => add a friend <br>
+delete('/api/amis/:id') => remove a friend <br>
 get('/api/amis') => get friends' list <br>
 
 <strong>Authentication:</strong>
