@@ -3,6 +3,8 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
 const session = require('express-session');
 const express = require('express');
+const bcrypt = require('bcrypt');
+const Marsupilami = require('./model/marsupilami');
 
 const app = express();
 
@@ -40,9 +42,8 @@ app.use(session({
 app.get('/api/marsupilamis', (req, res) => {
     // Query
     db.collection("Marsupilami").find({}).toArray((err, result) => {
-        if (err) {
-            throw err;
-        }
+        if (err) 
+            throw err;        
         res.json(result);
     })
     // GET les profil d'un marsupilami
@@ -58,18 +59,19 @@ app.get('/api/marsupilamis', (req, res) => {
     })
     // POST pour inscrire un nouveau marsupilami
 }).post('/api/marsupilamis', (req, res) => {
-    console.log(req.body);
-    db.collection("Marsupilami").insertOne(req.body,
+    const ip_user = req.body;
+    const newUser = new Marsupilami(ip_user.login, ip_user.mdp, ip_user.date_naissance, ip_user.famille, ip_user.race, ip_user.nourriture);
+    db.collection("Marsupilami").insertOne(newUser,
         (err, obj) => {
             if (err) {
-                throw err;
-            }
+                return res.status(409).send({ "message": "Login existant"});
+            } 
             res.json(obj);
         })
     // PUT pour modifier les informations d'un marsupilami
 }).put('/api/marsupilamis/:id', (req, res) => {
     const id = req.params.id;
-    const marsupilami = req.body;
+    const marsupilami = new Marsupilami(req.body.login, req.body.mdp, req.body.date_naissance, req.body.famille, req.body.race, req.body.nourriture);
     db.collection("Marsupilami").updateOne({
         "_id": new ObjectId(id)
     }, {
@@ -91,7 +93,6 @@ app.get('/api/marsupilamis', (req, res) => {
     // DELETE pour supprimer un marsupilami
 }).delete('/api/marsupilamis/:id', (req, res) => {
     const id = req.params.id;
-    console.log(id);
     db.collection("Marsupilami").deleteOne({
         "_id": new ObjectId(id)
     }, (err, obj) => {
@@ -103,40 +104,62 @@ app.get('/api/marsupilamis', (req, res) => {
 });
 
 // Gestion des amis
-// PUT pour ajouter un ami en ajoutant celui-ci à la liste des ids amis de l'utilisateur
-app.put('/api/amis/ajouter/:id', (req, res) => {
-    const id_ami = req.params.id;
-    db.collection("Marsupilami").updateOne({ "_id": new ObjectId(req.session.marsupiId) },
+// POST pour ajouter un ami en ajoutant celui-ci à la liste des ids amis de l'utilisateur
+app.post('/api/amis/:id', (req, res) => {
+    if(req.params.id == req.session.marsupiId){
+        return res.status(409).send("Ajout impossible");
+    }
+    const id_ami = new ObjectId(req.params.id);
+    var valid = true;
+    db.collection("Marsupilami").findOne({ "_id": id_ami}, (err, result) => {
+        if(err || !result){
+            valid = false;
+        }
+    });
+    if(!valid){
+        return res.status(404).send("utilisateur inexistant");
+    }
+    db.collection("Marsupilami").findOne({"_id": new ObjectId(req.session.marsupiId)}, (err, user) => {
+        if(err||!user)
+            return res.status(403).send("Login required");        
+    
+        for(var id of user.friend_ids)        
+            if(id.equals(id_ami))
+                return res.status(409).send("Ami déjà ajouté");
+                                
+            
+        db.collection("Marsupilami").updateOne({ "_id": user._id },
         {
             $push: {
-                "friend_ids": new ObjectId(id_ami)
+                "friend_ids": id_ami
             }
-        }, (err, obj) => {
-            if (err) {
+        }, (err) => {
+            if (err) 
                 throw err;
-            }
-            db.collection("Marsupilami").updateOne({ "_id": new ObjectId(id_ami) },
+            
+            db.collection("Marsupilami").updateOne({ "_id": id_ami },
                 {
                     $push: {
-                        "friend_ids": new ObjectId(req.session.marsupiId)
+                        "friend_ids": user._id
                     }
                 }, (err, obj) => {
-                    if (err) {
-                        throw err;
-                    }
-                    res.json(obj);
+                    if (err) 
+                        throw err;                    
+                    return res.status(201).send(obj);
                 });
         });
-    // PUT pour supprimer un ami en le supprimant de la liste des ids amis de l'utilisateur
+    });  
+    
+    // DELETE pour supprimer un ami en le supprimant de la liste des ids amis de l'utilisateur
 }) 
-    .put('/api/amis/supprimer/:id', (req, res) => {
+    .delete('/api/amis/:id', (req, res) => {
         const id_ami = req.params.id;
         db.collection("Marsupilami").updateOne({ "_id": new ObjectId(req.session.marsupiId) },
             {
                 $pull: {
                     "friend_ids": new ObjectId(id_ami)
                 }
-            }, (err, obj) => {
+            }, (err, obj) => { 
                 if (err) {
                     throw err;
                 }
@@ -160,13 +183,12 @@ app.get('/api/amis', (req, res) => {
     db.collection("Marsupilami").findOne({
         "_id": new ObjectId(id)
     }, (err, result) => {
-        if (err) {
+        if (err) 
             throw err;
-        }
+        
         db.collection("Marsupilami").find({ "_id" : { $in: result.friend_ids }}).toArray((err, obj) => {
-            if(err){
+            if(err)
                 throw err;
-            }
             res.json(obj);
         });
     });
@@ -179,13 +201,15 @@ app.post('/api/login', (req, res) => {
         if (err) {
             throw err;
         }
-        if (obj.mdp === req.body.mdp) {
-            req.session.marsupiId = obj._id;
-            console.log("Logged in!");
+        if (bcrypt.compareSync(req.body.mdp, obj.mdp)) {
+            req.session.marsupiId = obj._id;        
+            res.json(obj);
         } else {
+            res.status(403);
             res.end("Mot de passe incorrect!");
+            return;
         }
-        res.json(obj);
+
     });
     // logout avec GET
 })
@@ -196,7 +220,7 @@ app.post('/api/login', (req, res) => {
                     throw err;
                 } else {
                     console.log("logged out");
-                    res.redirect('/');
+                    res.send('Déconnecté');
                 }
             });
         }
