@@ -183,7 +183,7 @@ app.get('/api/amis', (req, res) => {
     db.collection("Marsupilami").findOne({
         "_id": new ObjectId(id)
     }, (err, result) => {
-        if (err) 
+        if (err || !result) 
             return res.status(404).send("Utilisateur on trouvé");
         
         db.collection("Marsupilami").find({ "_id" : { $in: result.friend_ids }}).toArray((err, obj) => {
@@ -198,7 +198,7 @@ app.get('/api/amis', (req, res) => {
 // login avec POST
 app.post('/api/login', (req, res) => {
     db.collection("Marsupilami").findOne({ "login": req.body.login }, (err, obj) => {
-        if (err) {
+        if (err || !obj) {
             return res.status(404).send("Non trouvé");
         }
         if (bcrypt.compareSync(req.body.mdp, obj.mdp)) {
