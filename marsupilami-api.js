@@ -3,7 +3,7 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
 const session = require('express-session');
 const express = require('express');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const Marsupilami = require('./model/marsupilami');
 
 const app = express();
@@ -43,7 +43,7 @@ app.get('/api/marsupilamis', (req, res) => {
     // Query
     db.collection("Marsupilami").find({}).toArray((err, result) => {
         if (err) 
-            throw err;        
+            return res.status(404).send("Non trouvé");      
         res.json(result);
     })
     // GET les profil d'un marsupilami
@@ -53,7 +53,7 @@ app.get('/api/marsupilamis', (req, res) => {
         "_id": new ObjectId(id)
     }, (err, result) => {
         if (err) {
-            throw err;
+            return res.status(404).send("Non trouvé");
         }
         res.json(result);
     })
@@ -86,7 +86,7 @@ app.get('/api/marsupilamis', (req, res) => {
         },
         (err, obj) => {
             if (err) {
-                throw err;
+                return res.status(404).send("Non trouvé");
             }
             res.json(obj);
         })
@@ -97,7 +97,7 @@ app.get('/api/marsupilamis', (req, res) => {
         "_id": new ObjectId(id)
     }, (err, obj) => {
         if (err) {
-            throw err;
+            return res.status(404).send("Non trouvé");
         }
         res.json(obj);
     })
@@ -135,7 +135,7 @@ app.post('/api/amis/:id', (req, res) => {
             }
         }, (err) => {
             if (err) 
-                throw err;
+                return res.status(404).send("Non trouvé");
             
             db.collection("Marsupilami").updateOne({ "_id": id_ami },
                 {
@@ -144,7 +144,7 @@ app.post('/api/amis/:id', (req, res) => {
                     }
                 }, (err, obj) => {
                     if (err) 
-                        throw err;                    
+                        return res.status(404).send("Non trouvé");                
                     return res.status(201).send(obj);
                 });
         });
@@ -161,7 +161,7 @@ app.post('/api/amis/:id', (req, res) => {
                 }
             }, (err, obj) => { 
                 if (err) {
-                    throw err;
+                    return res.status(404).send("Erreur de mise à jour");
                 }
                 db.collection("Marsupilami").updateOne({ "_id": new ObjectId(id_ami) },
                     {
@@ -170,7 +170,7 @@ app.post('/api/amis/:id', (req, res) => {
                         }
                     }, (err, obj) => {
                         if (err) {
-                            throw err;
+                            return res.status(404).send("Erreur de mise à jour");
                         }
                         res.json(obj);
                     });
@@ -184,11 +184,11 @@ app.get('/api/amis', (req, res) => {
         "_id": new ObjectId(id)
     }, (err, result) => {
         if (err) 
-            throw err;
+            return res.status(404).send("Utilisateur on trouvé");
         
         db.collection("Marsupilami").find({ "_id" : { $in: result.friend_ids }}).toArray((err, obj) => {
             if(err)
-                throw err;
+                return res.status(404).send("Amis non trouvés");
             res.json(obj);
         });
     });
@@ -199,7 +199,7 @@ app.get('/api/amis', (req, res) => {
 app.post('/api/login', (req, res) => {
     db.collection("Marsupilami").findOne({ "login": req.body.login }, (err, obj) => {
         if (err) {
-            throw err;
+            return res.status(404).send("Non trouvé");
         }
         if (bcrypt.compareSync(req.body.mdp, obj.mdp)) {
             req.session.marsupiId = obj._id;        
@@ -217,7 +217,7 @@ app.post('/api/login', (req, res) => {
         if (req.session) {
             req.session.destroy((err) => {
                 if (err) {
-                    throw err;
+                    return res.status(409).send("Problème de suppression");
                 } else {
                     console.log("logged out");
                     res.send('Déconnecté');
