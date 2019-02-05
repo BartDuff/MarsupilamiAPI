@@ -32,8 +32,13 @@ app.use(express.json());
 app.use(session({
     secret: 'Ougabounga',
     resave: true,
-    saveUninitialized: false
+    saveUninitialized: true,
+    cookie: {
+        expires: 20 * 1000
+     }
 }));
+
+app.use(express.static(__dirname + '/dist/marsupilamiClient'));
 
 //API marsupilamis pour CRUD
 
@@ -43,7 +48,7 @@ app.get('/api/marsupilamis', (req, res) => {
     // Query
     db.collection("Marsupilami").find({}).toArray((err, result) => {
         if (err) 
-            throw err;        
+        return res.status(404).send({"message":"Non trouvé"});       
         res.json(result);
     })
     // GET les profil d'un marsupilami
@@ -53,7 +58,7 @@ app.get('/api/marsupilamis', (req, res) => {
         "_id": new ObjectId(id)
     }, (err, result) => {
         if (err) {
-            throw err;
+            return res.status(404).send({"message":"Non trouvé"});
         }
         res.json(result);
     })
@@ -66,7 +71,8 @@ app.get('/api/marsupilamis', (req, res) => {
             if (err) {
                 return res.status(409).send({ "message": "Login existant"});
             } 
-            res.json(obj);
+
+            res.status(201).json(obj.ops[0]);
         })
     // PUT pour modifier les informations d'un marsupilami
 }).put('/api/marsupilamis/:id', (req, res) => {
@@ -86,7 +92,7 @@ app.get('/api/marsupilamis', (req, res) => {
         },
         (err, obj) => {
             if (err) {
-                throw err;
+                return res.status(404).send({"message":"Non trouvé"});
             }
             res.json(obj);
         })
@@ -97,7 +103,7 @@ app.get('/api/marsupilamis', (req, res) => {
         "_id": new ObjectId(id)
     }, (err, obj) => {
         if (err) {
-            throw err;
+            return res.status(404).send({"message":"Non trouvé"});
         }
         res.json(obj);
     })
@@ -107,7 +113,7 @@ app.get('/api/marsupilamis', (req, res) => {
 // POST pour ajouter un ami en ajoutant celui-ci à la liste des ids amis de l'utilisateur
 app.post('/api/amis/:id', (req, res) => {
     if(req.params.id == req.session.marsupiId){
-        return res.status(409).send("Ajout impossible");
+        return res.status(409).send({"message":"Ajout impossible"});
     }
     const id_ami = new ObjectId(req.params.id);
     var valid = true;
@@ -117,15 +123,15 @@ app.post('/api/amis/:id', (req, res) => {
         }
     });
     if(!valid){
-        return res.status(404).send("utilisateur inexistant");
+        return res.status(404).send({"message":"Utilisateur inexistant"});
     }
     db.collection("Marsupilami").findOne({"_id": new ObjectId(req.session.marsupiId)}, (err, user) => {
         if(err||!user)
-            return res.status(403).send("Login required");        
+            return res.status(403).send({"message":"Login requis"});        
     
         for(var id of user.friend_ids)        
             if(id.equals(id_ami))
-                return res.status(409).send("Ami déjà ajouté");
+                return res.status(409).send({"message":"Ami déjà ajouté"});
                                 
             
         db.collection("Marsupilami").updateOne({ "_id": user._id },
@@ -144,7 +150,7 @@ app.post('/api/amis/:id', (req, res) => {
                     }
                 }, (err, obj) => {
                     if (err) 
-                        throw err;                    
+                        return res.status(404).send({"message":"Non trouvé"});                   
                     return res.status(201).send(obj);
                 });
         });
@@ -161,7 +167,7 @@ app.post('/api/amis/:id', (req, res) => {
                 }
             }, (err, obj) => { 
                 if (err) {
-                    throw err;
+                    return res.status(404).send({"message":"Non trouvé"});
                 }
                 db.collection("Marsupilami").updateOne({ "_id": new ObjectId(id_ami) },
                     {
@@ -170,7 +176,7 @@ app.post('/api/amis/:id', (req, res) => {
                         }
                     }, (err, obj) => {
                         if (err) {
-                            throw err;
+                            return res.status(404).send({"message":"Non trouvé"});
                         }
                         res.json(obj);
                     });
@@ -184,11 +190,11 @@ app.get('/api/amis', (req, res) => {
         "_id": new ObjectId(id)
     }, (err, result) => {
         if (err) 
-            throw err;
+            return res.status(404).send({"message":"Non trouvé"});
         
         db.collection("Marsupilami").find({ "_id" : { $in: result.friend_ids }}).toArray((err, obj) => {
             if(err)
-                throw err;
+                return res.status(404).send({"message":"Non trouvé"});
             res.json(obj);
         });
     });
@@ -199,14 +205,14 @@ app.get('/api/amis', (req, res) => {
 app.post('/api/login', (req, res) => {
     db.collection("Marsupilami").findOne({ "login": req.body.login }, (err, obj) => {
         if (err) {
-            throw err;
+            return res.status(404).send({"message":"Non trouvé"});
         }
         if (bcrypt.compareSync(req.body.mdp, obj.mdp)) {
             req.session.marsupiId = obj._id;        
             res.json(obj);
         } else {
             res.status(403);
-            res.end("Mot de passe incorrect!");
+            res.send({"message":"Mot de passe incorrect"});
             return;
         }
 
@@ -217,10 +223,9 @@ app.post('/api/login', (req, res) => {
         if (req.session) {
             req.session.destroy((err) => {
                 if (err) {
-                    throw err;
+                    return res.status(404).send({"message":"Non trouvé"});
                 } else {
-                    console.log("logged out");
-                    res.send('Déconnecté');
+                    res.send({"message":"Déconnecté"});
                 }
             });
         }
