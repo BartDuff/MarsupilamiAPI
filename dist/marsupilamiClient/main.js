@@ -103,7 +103,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav>\n  <div class=\"nav-wrapper lime lighten-2\">\n    <app-header></app-header>\n  </div>\n</nav>\n<router-outlet></router-outlet>\n"
+module.exports = "<nav>\r\n  <div class=\"nav-wrapper grey darken-4\">\r\n    <app-header></app-header>\r\n  </div>\r\n</nav>\r\n<div class=\"container\">\r\n  <router-outlet></router-outlet>\r\n</div>"
 
 /***/ }),
 
@@ -360,7 +360,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"collection\" *ngFor=\"let m of friends | async\">\n  <li class=\"collection-item avatar\">\n    <span class=\"title\">Nom: {{ m.login }}</span>\n    <p>Famille: {{ m.famille }}<br>\n      Race: {{ m.race }}<br>\n      Nourriture: {{ m.nourriture }}<br>\n    </p>\n    <a [routerLink]=\"['/marsupilamis/', m._id]\" class=\"btn-floating btn-large waves-effect waves-light lime lighten-2\">Voir</a>\n  </li>\n</ul>"
+module.exports = "<ul class=\"collection\" *ngFor=\"let m of friends | async\">\r\n  <li class=\"collection-item avatar\">\r\n    <span class=\"title\">Nom: {{ m.login }}</span>\r\n    <p>Famille: {{ m.famille }}<br>\r\n      Race: {{ m.race }}<br>\r\n      Nourriture: {{ m.nourriture }}<br>\r\n    </p>\r\n    <a [routerLink]=\"['/marsupilamis/', m._id]\" class=\"btn-floating btn-large waves-effect waves-light yellow accent-4 black-text\">Voir</a>\r\n  </li>\r\n</ul>"
 
 /***/ }),
 
@@ -469,7 +469,7 @@ var FriendService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".logo {\n    height: 50px;\n    width: 50px;\n}"
+module.exports = ".logo {\r\n    height: 50px;\r\n    width: 50px;\r\n}"
 
 /***/ }),
 
@@ -480,7 +480,7 @@ module.exports = ".logo {\n    height: 50px;\n    width: 50px;\n}"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<a ref=\"#!\" class=\"brand-logo left\"><img class=\"logo \"src=\"../../assets/images/marsupilami.png\"/></a>\n<a href=\"#!\" class=\"brand-logo center\">MarsupilAmi</a>\n<ul class=\"right hide-on-med-and-down\">\n  <li><a routerLink=\"/login\" *ngIf=\"!isAuth\">Login</a></li>\n  <li><a (click)=\"onLogout()\" *ngIf=\"isAuth\">Logout</a></li>\n  <li><a routerLink=\"/registration\" *ngIf=\"!isAuth\">Inscription</a></li>\n  <li><a routerLink=\"/registration\" *ngIf=\"isAuth\">Inscrire ami</a></li>\n  <li><a routerLink=\"/marsupilamis/{{ currentUser._id }}\" *ngIf=\"isAuth\">{{currentUser.login}}</a></li>\n  <li><a routerLink=\"/edit_marsupilami/{{ currentUser._id }}\" *ngIf=\"isAuth\">Editer</a></li>\n  <li><a routerLink=\"/amis\" *ngIf=\"isAuth\">Amis</a></li>\n  <li><a routerLink=\"/marsupilamis\" *ngIf=\"isAuth\">Marsupilamis</a></li>\n</ul>"
+module.exports = "<a ref=\"#!\" class=\"brand-logo left\"><img class=\"logo \"src=\"../../assets/images/marsupilami.png\"/></a>\r\n<a href=\"#!\" class=\"brand-logo center\">MarsupilAmi</a>\r\n<ul class=\"right hide-on-med-and-down\">\r\n  <li><a routerLink=\"/login\" *ngIf=\"!isAuth\">Login</a></li>\r\n  <li><a (click)=\"onLogout()\" *ngIf=\"isAuth\">Logout</a></li>\r\n  <li><a routerLink=\"/registration\" *ngIf=\"!isAuth\">Inscription</a></li>\r\n  <li><a routerLink=\"/registration\" *ngIf=\"isAuth\">Inscrire ami</a></li>\r\n  <li><a routerLink=\"/marsupilamis/{{ currentUser._id }}\" *ngIf=\"isAuth\">{{currentUser.login}}</a></li>\r\n  <li><a routerLink=\"/edit_marsupilami/{{ currentUser._id }}\" *ngIf=\"isAuth\">Editer</a></li>\r\n  <li><a routerLink=\"/amis\" *ngIf=\"isAuth\">Amis</a></li>\r\n  <li><a routerLink=\"/marsupilamis\" *ngIf=\"isAuth\">Marsupilamis</a></li>\r\n</ul>"
 
 /***/ }),
 
@@ -551,7 +551,7 @@ var HeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".row {\r\n    margin-top: 10%;\r\n}\r\n\r\nh4 {\r\n    padding: 10px;\r\n}"
 
 /***/ }),
 
@@ -562,7 +562,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col s6 offset-s3\">\n    <div class=\"center-align\">\n      <h2 class=\"lime lighten-2 white-text z-depth-3\">Connexion: </h2>\n      <form [formGroup]=\"marsuForm\" (ngSubmit)=\"login()\">\n        <div class=\"form-group\">\n          <label for=\"login\">Login:</label>\n          <input type=\"text\" class=\"form-control\" [ngClass]=\"{ 'invalid': !marsuForm.controls.login.valid && marsuForm.controls.login.dirty }\"\n            id=\"login\" formControlName=\"login\">\n          <div *ngIf=\"!marsuForm.controls.login.valid && marsu.controls.login.dirty\">\n            Utilisateur inconnu\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"mdp\">Mot de passe: </label>\n          <input type=\"password\" class=\"form-control\" id=\"mdp\" formControlName=\"mdp\" [ngClass]=\"{ 'invalid': !marsuForm.controls.mdp.valid && marsuForm.controls.mdp.dirty }\">\n        </div>\n        <button class=\"btn waves-effect waves-light pulse lime darken-2\" type=\"submit\" name=\"action\" [disabled]=\"!marsuForm.valid\">\n          Login\n        </button>\n      </form>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"row\">\r\n  <div class=\"col s4 offset-s4\">\r\n    <div class=\"center-align\">\r\n      <h4 class=\"grey darken-3 white-text z-depth-3\">Connexion: </h4>\r\n      <form [formGroup]=\"marsuForm\" (ngSubmit)=\"login()\">\r\n        <div class=\"form-group\">\r\n          <label for=\"login\">Login:</label>\r\n          <input type=\"text\" class=\"form-control\" [ngClass]=\"{ 'invalid': !marsuForm.controls.login.valid && marsuForm.controls.login.dirty }\"\r\n            id=\"login\" formControlName=\"login\">\r\n          <div *ngIf=\"!marsuForm.controls.login.valid && marsu.controls.login.dirty\">\r\n            Utilisateur inconnu\r\n          </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <label for=\"mdp\">Mot de passe: </label>\r\n          <input type=\"password\" class=\"form-control\" id=\"mdp\" formControlName=\"mdp\" [ngClass]=\"{ 'invalid': !marsuForm.controls.mdp.valid && marsuForm.controls.mdp.dirty }\">\r\n        </div>\r\n        <button class=\"btn waves-effect waves-light pulse yellow accent-4 black-text\" type=\"submit\" name=\"action\" [disabled]=\"!marsuForm.valid\">\r\n          Login\r\n        </button>\r\n      </form>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -662,7 +662,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p *ngIf=\"!marsupilami\">Chargement en cours...</p>\n<div class=\"card big\" *ngIf=\"marsupilami\">\n  <div class=\"card-content\">\n    <h4 class=\"lime lighten-2\">Détails sur le Marsupilami:</h4>\n    <span class=\"card-title\">Nom: {{ marsupilami.login }}</span>\n    <p>Famille: {{ marsupilami.famille }}</p>\n    <p>Race: {{ marsupilami.race}}</p>\n    <p>Nourriture: {{ marsupilami.nourriture}}</p>\n    <div class=\"card-action\">\n      <a routerLink=\"/marsupilamis\" class=\"btn lime lighten-2 btn-lg btn-primary center-align\">\n        Retour\n      </a>\n      <button (click)=\"addFriend(marsupilami)\" *ngIf=\"friendable\" class=\"btn lime lighten-2 btn-lg btn-primary center-align\">\n        Ajouter\n      </button>\n      <button (click)=\"deleteFriend(marsupilami)\" *ngIf=\"unfriendable\" class=\"btn lime lighten-2 btn-lg btn-primary center-align\">\n        Supprimer\n        </button>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<p *ngIf=\"!marsupilami\">Chargement en cours...</p>\r\n<div class=\"card big\" *ngIf=\"marsupilami\">\r\n  <div class=\"card-content\">\r\n    <h4 class=\"grey darken-3 white-text\">Détails sur le Marsupilami:</h4>\r\n    <span class=\"card-title\">Nom: {{ marsupilami.login }}</span>\r\n    <p>Famille: {{ marsupilami.famille }}</p>\r\n    <p>Race: {{ marsupilami.race}}</p>\r\n    <p>Nourriture: {{ marsupilami.nourriture}}</p>\r\n    <div class=\"card-action\">\r\n      <a routerLink=\"/marsupilamis\" class=\"btn yellow accent-4 black-text btn-lg btn-primary center-align\">\r\n        Retour\r\n      </a>\r\n      <button (click)=\"addFriend(marsupilami)\" *ngIf=\"friendable\" class=\"btn yellow accent-4 black-text btn-lg btn-primary center-align\">\r\n        Ajouter\r\n      </button>\r\n      <button (click)=\"deleteFriend(marsupilami)\" *ngIf=\"unfriendable\" class=\"btn yellow accent-4 black-text btn-lg btn-primary center-align\">\r\n        Supprimer\r\n        </button>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -777,7 +777,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"center-align\">\n  <h2 class=\"lime lighten-2 z-depth-3\">Inscription</h2>\n  <form [formGroup]=\"marsuForm\" (ngSubmit)=\"editMarsupilami()\">\n    <div class=\"form-group\">\n      <label for=\"login\">Login:</label>\n      <input type=\"text\" class=\"form-control\" [ngClass]=\"{ 'invalid': !marsuForm.controls.login.valid && marsuForm.controls.login.dirty }\"\n        id=\"login\" formControlName=\"login\">\n      <div *ngIf=\"!marsuForm.controls.login.valid && marsuForm.controls.login.dirty\">\n        Le nom du Marsupilami est obligatoire!\n      </div>\n    </div>\n    <div class=\"form-group\">\n      <label for=\"mdp\">Mot de passe: </label>\n      <input type=\"password\" class=\"form-control\" id=\"mdp\" formControlName=\"mdp\" [ngClass]=\"{ 'invalid': !marsuForm.controls.mdp.valid && marsuForm.controls.mdp.dirty }\">\n    </div>\n    <div *ngIf=\"!marsuForm.controls.mdp.valid && marsuForm.controls.mdp.dirty\">\n      Le mot de passe est obligatoire!\n    </div>\n    <div class=\"form-group\">\n      <label for=\"date_naissance\">Date de Naissance:</label>\n      <input type=\"text\" class=\"form-control\" id=\"date_naissance\" formControlName=\"date_naissance\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"famille\">Famille: </label>\n      <input type=\"text\" class=\"form-control\" id=\"famille\" formControlName=\"famille\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"race\">Race :</label>\n      <input type=\"text\" class=\"form-control\" id=\"race\" formControlName=\"race\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"nourriture\">Nourriture: </label>\n      <input type=\"text\" class=\"form-control\" id=\"nourriture\" formControlName=\"nourriture\">\n    </div>\n    <button class=\"lime lighten-2 btn waves-effect waves-light pulse\" type=\"submit\" name=\"action\" [disabled]=\"!marsuForm.valid\">\n      Modifier\n    </button>\n  </form>\n</div>\n"
+module.exports = "<div class=\"center-align\">\r\n  <h2 class=\"grey darken-3 white-text z-depth-3\">Inscription</h2>\r\n  <form [formGroup]=\"marsuForm\" (ngSubmit)=\"editMarsupilami()\">\r\n    <div class=\"form-group\">\r\n      <label for=\"login\">Login:</label>\r\n      <input type=\"text\" class=\"form-control\" [ngClass]=\"{ 'invalid': !marsuForm.controls.login.valid && marsuForm.controls.login.dirty }\"\r\n        id=\"login\" formControlName=\"login\">\r\n      <div *ngIf=\"!marsuForm.controls.login.valid && marsuForm.controls.login.dirty\">\r\n        Le nom du Marsupilami est obligatoire!\r\n      </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n      <label for=\"mdp\">Mot de passe: </label>\r\n      <input type=\"password\" class=\"form-control\" id=\"mdp\" formControlName=\"mdp\" [ngClass]=\"{ 'invalid': !marsuForm.controls.mdp.valid && marsuForm.controls.mdp.dirty }\">\r\n    </div>\r\n    <div *ngIf=\"!marsuForm.controls.mdp.valid && marsuForm.controls.mdp.dirty\">\r\n      Le mot de passe est obligatoire!\r\n    </div>\r\n    <div class=\"form-group\">\r\n      <label for=\"date_naissance\">Date de Naissance:</label>\r\n      <input type=\"text\" class=\"form-control\" id=\"date_naissance\" formControlName=\"date_naissance\">\r\n    </div>\r\n    <div class=\"form-group\">\r\n      <label for=\"famille\">Famille: </label>\r\n      <input type=\"text\" class=\"form-control\" id=\"famille\" formControlName=\"famille\">\r\n    </div>\r\n    <div class=\"form-group\">\r\n      <label for=\"race\">Race :</label>\r\n      <input type=\"text\" class=\"form-control\" id=\"race\" formControlName=\"race\">\r\n    </div>\r\n    <div class=\"form-group\">\r\n      <label for=\"nourriture\">Nourriture: </label>\r\n      <input type=\"text\" class=\"form-control\" id=\"nourriture\" formControlName=\"nourriture\">\r\n    </div>\r\n    <button class=\"yellow accent-4 black-text btn waves-effect waves-light pulse\" type=\"submit\" name=\"action\" [disabled]=\"!marsuForm.valid\">\r\n      Modifier\r\n    </button>\r\n  </form>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -894,7 +894,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"collection\" *ngFor=\"let m of marsupilamis | async\">\n  <li class=\"collection-item avatar\">\n    <span class=\"title\">Nom: {{ m.login }}</span>\n    <p>Famille: {{ m.famille }}<br>\n      Race: {{ m.race }}<br>\n      Nourriture: {{ m.nourriture }}<br>\n    </p>\n    <a [routerLink]=\"['/marsupilamis/', m._id]\" class=\"btn-floating btn-large waves-effect waves-light lime lighten-2\">Voir</a>\n  </li>\n</ul>"
+module.exports = "<ul class=\"collection\" *ngFor=\"let m of marsupilamis | async\">\r\n  <li class=\"collection-item avatar\">\r\n    <span class=\"title\">Nom: {{ m.login }}</span>\r\n    <p>Famille: {{ m.famille }}<br>\r\n      Race: {{ m.race }}<br>\r\n      Nourriture: {{ m.nourriture }}<br>\r\n    </p>\r\n    <a [routerLink]=\"['/marsupilamis/', m._id]\" class=\"btn-floating btn-large waves-effect waves-light yellow accent-4 black-text\">Voir</a>\r\n  </li>\r\n</ul>"
 
 /***/ }),
 
@@ -953,7 +953,7 @@ var MarsupilamiListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".row {\r\n    margin-top: 10%;\r\n}\r\n\r\nh4 {\r\n    padding: 10px;\r\n}\r\n\r\nbutton:disabled {\r\n    background-color: #fff9c4;\r\n}"
 
 /***/ }),
 
@@ -964,7 +964,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"center-align\">\n  <h2 class=\"lime lighten-2 z-depth-3\">Inscription</h2>\n  <form [formGroup]=\"marsuForm\" (ngSubmit)=\"addMarsupilami()\">\n    <div class=\"form-group\">\n      <label for=\"login\">Login:</label>\n      <input type=\"text\" class=\"form-control\" [ngClass]=\"{ 'invalid': !marsuForm.controls.login.valid && marsuForm.controls.login.dirty }\"\n        id=\"login\" formControlName=\"login\">\n      <div *ngIf=\"!marsuForm.controls.login.valid && marsuForm.controls.login.dirty\">\n        Le nom du Marsupilami est obligatoire!\n      </div>\n    </div>\n    <div class=\"form-group\">\n      <label for=\"mdp\">Mot de passe: </label>\n      <input type=\"password\" class=\"form-control\" id=\"mdp\" formControlName=\"mdp\" [ngClass]=\"{ 'invalid': !marsuForm.controls.mdp.valid && marsuForm.controls.mdp.dirty }\">\n    </div>\n    <div *ngIf=\"!marsuForm.controls.mdp.valid && marsuForm.controls.mdp.dirty\">\n      Le mot de passe est obligatoire!\n    </div>\n    <div class=\"form-group\">\n      <label for=\"date_naissance\">Date de Naissance:</label>\n      <input type=\"text\" class=\"form-control\" id=\"date_naissance\" formControlName=\"date_naissance\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"famille\">Famille: </label>\n      <input type=\"text\" class=\"form-control\" id=\"famille\" formControlName=\"famille\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"race\">Race :</label>\n      <input type=\"text\" class=\"form-control\" id=\"race\" formControlName=\"race\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"nourriture\">Nourriture: </label>\n      <input type=\"text\" class=\"form-control\" id=\"nourriture\" formControlName=\"nourriture\">\n    </div>\n    <button class=\"btn waves-effect waves-light pulse\" type=\"submit\" name=\"action\" [disabled]=\"!marsuForm.valid\">\n      Inscription\n    </button>\n  </form>\n</div>"
+module.exports = "<div class=\"row\">\r\n  <div class=\"col s4 offset-s4\">\r\n    <div class=\"center-align\">\r\n      <h4 class=\"grey darken-3 white-text z-depth-3\">Inscription</h4>\r\n      <form [formGroup]=\"marsuForm\" (ngSubmit)=\"addMarsupilami()\">\r\n        <div class=\"form-group\">\r\n          <label for=\"login\">Login:</label>\r\n          <input type=\"text\" class=\"form-control\" [ngClass]=\"{ 'invalid': !marsuForm.controls.login.valid && marsuForm.controls.login.dirty }\"\r\n            id=\"login\" formControlName=\"login\">\r\n          <div *ngIf=\"!marsuForm.controls.login.valid && marsuForm.controls.login.dirty\">\r\n            Le nom du Marsupilami est obligatoire!\r\n          </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <label for=\"mdp\">Mot de passe: </label>\r\n          <input type=\"password\" class=\"form-control\" id=\"mdp\" formControlName=\"mdp\" [ngClass]=\"{ 'invalid': !marsuForm.controls.mdp.valid && marsuForm.controls.mdp.dirty }\">\r\n        </div>\r\n        <div *ngIf=\"!marsuForm.controls.mdp.valid && marsuForm.controls.mdp.dirty\">\r\n          Le mot de passe est obligatoire!\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <label for=\"date_naissance\">Date de Naissance:</label>\r\n          <input type=\"text\" class=\"form-control\" id=\"date_naissance\" formControlName=\"date_naissance\">\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <label for=\"famille\">Famille: </label>\r\n          <input type=\"text\" class=\"form-control\" id=\"famille\" formControlName=\"famille\">\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <label for=\"race\">Race :</label>\r\n          <input type=\"text\" class=\"form-control\" id=\"race\" formControlName=\"race\">\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <label for=\"nourriture\">Nourriture: </label>\r\n          <input type=\"text\" class=\"form-control\" id=\"nourriture\" formControlName=\"nourriture\">\r\n        </div>\r\n        <button class=\"btn waves-effect waves-light pulse yellow accent-4 black-text\" type=\"submit\" name=\"action\"\r\n          [disabled]=\"!marsuForm.valid\">\r\n          Inscription\r\n        </button>\r\n      </form>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -1173,7 +1173,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"red\">\n  Erreur 404: Impossible de trouver la page!\n</h1>\n<p>Redirection dans {{ seconds }} seconde<span *ngIf=\"seconds > 1\">s</span>... </p>"
+module.exports = "<h1 class=\"red\">\r\n  Erreur 404: Impossible de trouver la page!\r\n</h1>\r\n<p>Redirection dans {{ seconds }} seconde<span *ngIf=\"seconds > 1\">s</span>... </p>"
 
 /***/ }),
 
@@ -1295,7 +1295,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/flo/Desktop/AngularMarsupi/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\stagiaire\Desktop\Nouveau dossier\marsupilamiAngularClient\src\main.ts */"./src/main.ts");
 
 
 /***/ })

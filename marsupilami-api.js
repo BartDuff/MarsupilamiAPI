@@ -30,12 +30,9 @@ MongoClient.connect(url, {
 // Middleware JSON
 app.use(express.json());
 app.use(session({
-    secret: 'Ougabounga',
+    secret: 'Oubaouba',
     resave: true,
     saveUninitialized: true,
-    cookie: {
-        expires: 20 * 1000
-     }
 }));
 
 app.use(express.static(__dirname + '/dist/marsupilamiClient'));
