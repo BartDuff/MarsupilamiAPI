@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 class Marsupilami {
     constructor(login, mdp, date_naissance, famille, race, nourriture){

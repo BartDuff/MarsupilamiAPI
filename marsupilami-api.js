@@ -3,7 +3,7 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
 const session = require('express-session');
 const express = require('express');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const Marsupilami = require('./model/marsupilami');
 
 const app = express();
@@ -141,7 +141,7 @@ app.post('/api/amis/:id', (req, res) => {
             }
         }, (err) => {
             if (err) 
-                throw err;
+                return res.status(404).send("Non trouvé");
             
             db.collection("Marsupilami").updateOne({ "_id": id_ami },
                 {
