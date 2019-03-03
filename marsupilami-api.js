@@ -228,6 +228,19 @@ app.post('/api/login', (req, res) => {
         }
     });
 
+app.get('/api/nourritures', (req, res) => {
+    db.collection("Marsupilami").distinct("nourriture", (err,result)=>{
+        if(err)return res.status(404).send({"message":"Erreur de récupération des nourritures."})
+        res.json(result);
+
+    })
+
+
+
+
+   
+})
+
 app.listen(5000, "localhost", () => {
     console.log("Ecoute sur le port 5000...");
 });
